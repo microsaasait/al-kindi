@@ -74,6 +74,15 @@ const Admin: React.FC = () => {
   const [wheelTarget, setWheelTarget] = useState<number | null>(null);
   const [revealed, setRevealed] = useState<Draw | null>(null);
 
+  // Le tableau de bord n'a rien à faire dans un moteur de recherche.
+  useEffect(() => {
+    const balise = document.createElement('meta');
+    balise.name = 'robots';
+    balise.content = 'noindex, nofollow';
+    document.head.appendChild(balise);
+    return () => balise.remove();
+  }, []);
+
   useEffect(() => {
     if (!supabaseReady) {
       setReady(true);

@@ -16,6 +16,7 @@ import Footer from './components/Footer';
 // sur l'accueil : ils sont chargés seulement quand on va sur leur adresse.
 const Admin = lazy(() => import('./pages/Admin'));
 const Confidentialite = lazy(() => import('./pages/Confidentialite'));
+const Introuvable = lazy(() => import('./pages/Introuvable'));
 
 const Home: React.FC = () => (
   <>
@@ -48,7 +49,7 @@ const App: React.FC = () => (
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/confidentialite" element={<Confidentialite />} />
-        <Route path="*" element={<Home />} />
+        <Route path="*" element={<Introuvable />} />
       </Routes>
     </Suspense>
   </BrowserRouter>

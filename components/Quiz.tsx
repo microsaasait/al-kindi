@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Check, RotateCcw, Sparkles, X } from 'lucide-react';
+import { Check, Gift, RotateCcw, Sparkles, X } from 'lucide-react';
 import Reveal from './Reveal';
 import QuizReward from './QuizReward';
 import { PERSO, PERSO_PAR_THEME } from '../src/personnages';
@@ -186,6 +186,63 @@ const Quiz: React.FC = () => {
                     <p className="mt-2 text-[15px] text-ak-text">
                       Histoire, sciences, géo, français, calcul : on verra bien où tu en es.
                     </p>
+
+                    {/* Ce qu'il y a à gagner, annoncé avant de commencer */}
+                    <div className="relative mt-8 overflow-hidden rounded-3xl border-2 border-ak-gold/50 bg-ak-gold/10 p-6 text-left sm:p-7">
+                      <div className="flex flex-col items-center gap-5 sm:flex-row sm:items-center">
+                        <motion.img
+                          src={PERSO.cadeau}
+                          alt=""
+                          width={192}
+                          height={192}
+                          className="h-24 w-24 shrink-0 drop-shadow-[0_10px_16px_rgba(20,67,44,0.18)]"
+                          animate={{ y: [0, -10, 0], rotate: [-6, 6, -6], scale: [1, 1.05, 1] }}
+                          transition={{ repeat: Infinity, duration: 2.6, ease: 'easeInOut' }}
+                        />
+
+                        <div className="text-center sm:text-left">
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-ak-orange px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-wide text-white">
+                            <Gift size={13} strokeWidth={2.6} />
+                            À gagner ce mois-ci
+                          </span>
+                          <p className="mt-3 text-[24px] font-extrabold leading-tight text-ak-ink sm:text-[27px]">
+                            20 € de crédit
+                          </p>
+                          <p className="mt-1 text-[15px] leading-[1.6] text-ak-text">
+                            Sur la plateforme de ton choix : Fortnite, Steam, PlayStation, Xbox, Nintendo…
+                            c’est toi qui décides.
+                          </p>
+                        </div>
+
+                        <motion.img
+                          src={PERSO.manette}
+                          alt=""
+                          width={192}
+                          height={192}
+                          loading="lazy"
+                          className="hidden h-16 w-16 shrink-0 lg:block"
+                          animate={{ y: [0, -8, 0], rotate: [0, -10, 0] }}
+                          transition={{ repeat: Infinity, duration: 3.4, ease: 'easeInOut', delay: 0.5 }}
+                        />
+                      </div>
+
+                      <ul className="mt-6 grid gap-2.5 sm:grid-cols-3">
+                        {[
+                          `${WIN_THRESHOLD} bonnes réponses sur ${ROUND_SIZE} suffisent`,
+                          'Un gagnant tiré au sort chaque mois',
+                          'Gratuit, avec l’accord des parents',
+                        ].map((point) => (
+                          <li
+                            key={point}
+                            className="flex items-start gap-2 rounded-2xl bg-white/70 px-4 py-3 text-[13px] font-semibold leading-[1.45] text-ak-text"
+                          >
+                            <Check size={15} strokeWidth={3} className="mt-0.5 shrink-0 text-ak-green" />
+                            {point}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
                     <button
                       type="button"
                       onClick={start}

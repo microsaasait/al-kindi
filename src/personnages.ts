@@ -13,6 +13,8 @@ export const PERSO = {
   fete: '/personnages/fete.webp',
   trophee: '/personnages/trophee.webp',
   diplome: '/personnages/diplome.webp',
+  cadeau: '/personnages/cadeau.webp',
+  manette: '/personnages/manette.webp',
 } as const;
 
 export type PersoKey = keyof typeof PERSO;

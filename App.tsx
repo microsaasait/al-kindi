@@ -23,10 +23,10 @@ const Home: React.FC = () => (
     <Navbar />
     <main>
       <Hero />
+      <Quiz />
       <Pillars />
       <Heritage />
       <Method />
-      <Quiz />
       <Values />
       <Volunteers />
       <Faq />

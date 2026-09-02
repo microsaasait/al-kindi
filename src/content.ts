@@ -120,9 +120,9 @@ export const FAQ = [
 ];
 
 export const NAV_LINKS = [
+  { href: '#quiz', label: 'Mini-jeu' },
   { href: '#actions', label: 'Nos actions' },
   { href: '#heritage', label: 'Notre nom' },
   { href: '#methode', label: 'Comment ça marche' },
-  { href: '#quiz', label: 'Mini-jeu' },
   { href: '#faq', label: 'Questions' },
 ];

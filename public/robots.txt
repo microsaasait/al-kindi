@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://association-alkindi.fr/sitemap.xml
+Sitemap: https://al-kindi-seven.vercel.app/sitemap.xml

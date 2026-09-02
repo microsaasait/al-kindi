@@ -5,7 +5,7 @@
 // sur la page et dans le schema.org).
 // ---------------------------------------------------------------------------
 
-export const SITE_URL = 'https://association-alkindi.fr'; // TODO domaine définitif
+export const SITE_URL = 'https://al-kindi-seven.vercel.app'; // TODO remplacer par le domaine définitif de l'association (et le répercuter dans index.html, robots.txt et sitemap.xml)
 
 export const CONTACT = {
   email: 'contact@association-alkindi.fr', // TODO email réel

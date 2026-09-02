@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import Pillars from './components/Pillars';
 import Heritage from './components/Heritage';
 import Method from './components/Method';
+import Quiz from './components/Quiz';
 import Values from './components/Values';
 import Volunteers from './components/Volunteers';
 import Faq from './components/Faq';
@@ -18,6 +19,7 @@ const App: React.FC = () => (
       <Pillars />
       <Heritage />
       <Method />
+      <Quiz />
       <Values />
       <Volunteers />
       <Faq />

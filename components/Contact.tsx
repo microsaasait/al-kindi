@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Mail, MapPin, Phone, Send } from 'lucide-react';
+import { MapPin, MessageCircle } from 'lucide-react';
 import Reveal from './Reveal';
-import { CONTACT } from '../src/siteConfig';
+import { CONTACT, WHATSAPP_NUMBER } from '../src/siteConfig';
 
 type Subject = 'inscription' | 'benevolat' | 'autre';
 
@@ -12,9 +12,8 @@ const SUBJECTS: { value: Subject; label: string }[] = [
 ];
 
 /**
- * Le formulaire ouvre le client mail du visiteur : aucun backend à héberger,
- * rien à maintenir pour l'association. Le jour où elle veut recevoir les
- * demandes dans un tableau, on branche un webhook ici.
+ * Le formulaire ouvre WhatsApp avec le message déjà rédigé : aucun backend à
+ * héberger, et l'association répond depuis son téléphone.
  */
 const Contact: React.FC = () => {
   const [subject, setSubject] = useState<Subject>('inscription');
@@ -24,17 +23,23 @@ const Contact: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!WHATSAPP_NUMBER) return;
+
     const label = SUBJECTS.find((s) => s.value === subject)?.label ?? 'Demande';
-    const body = [
+    const detail = subject === 'inscription' ? "Classe de l'élève" : 'Matières & disponibilités';
+    const text = [
+      `Bonjour, je vous écris depuis le site de l'association Al Kindi.`,
+      '',
+      `Demande : ${label}`,
       `Nom : ${name}`,
-      subject === 'inscription' ? `Classe de l'élève : ${level}` : `Matières / disponibilités : ${level}`,
+      level ? `${detail} : ${level}` : '',
       '',
       message,
-    ].join('\n');
+    ]
+      .filter((line) => line !== null)
+      .join('\n');
 
-    window.location.href = `mailto:${CONTACT.email}?subject=${encodeURIComponent(
-      `[Site] ${label}`
-    )}&body=${encodeURIComponent(body)}`;
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
   };
 
   return (
@@ -47,39 +52,33 @@ const Contact: React.FC = () => {
               Parlons de votre enfant
             </h2>
             <p className="mt-5 text-[16px] leading-[1.75] text-ak-text">
-              Dites-nous en quelques lignes où en est l'élève. Nous revenons vers vous pour un premier
-              échange, sans engagement.
+              Dites-nous en quelques lignes où en est l'élève. Le message part sur WhatsApp, nous
+              revenons vers vous pour un premier échange, sans engagement.
             </p>
 
             <ul className="mt-10 space-y-5">
               <li className="flex items-start gap-3">
-                <MapPin size={18} className="mt-0.5 shrink-0 text-ak-green" strokeWidth={1.7} />
+                <MapPin size={18} className="mt-0.5 shrink-0 text-ak-green" strokeWidth={2} />
                 <span className="text-[15px] font-medium text-ak-text">
                   {CONTACT.addressLine ? `${CONTACT.addressLine}, ` : ''}
-                  {CONTACT.postalCode} {CONTACT.city}
+                  {CONTACT.city}
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <Mail size={18} className="mt-0.5 shrink-0 text-ak-green" strokeWidth={1.7} />
-                <a href={`mailto:${CONTACT.email}`} className="text-[15px] font-medium text-ak-text hover:text-ak-green">
-                  {CONTACT.email}
-                </a>
+                <MessageCircle size={18} className="mt-0.5 shrink-0 text-ak-green" strokeWidth={2} />
+                <span className="text-[15px] font-medium text-ak-text">
+                  Réponse sur WhatsApp, en général sous 48 h
+                </span>
               </li>
-              {CONTACT.phone && (
-                <li className="flex items-start gap-3">
-                  <Phone size={18} className="mt-0.5 shrink-0 text-ak-green" strokeWidth={1.7} />
-                  <a href={`tel:${CONTACT.phoneHref}`} className="text-[15px] font-medium text-ak-text hover:text-ak-green">
-                    {CONTACT.phone}
-                  </a>
-                </li>
-              )}
             </ul>
           </Reveal>
 
           <Reveal delay={0.1}>
             <form onSubmit={handleSubmit} className="ak-card p-6 sm:p-8">
               <fieldset>
-                <legend className="text-[13px] font-bold uppercase tracking-wide text-ak-text">Votre demande</legend>
+                <legend className="text-[13px] font-bold uppercase tracking-wide text-ak-text">
+                  Votre demande
+                </legend>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {SUBJECTS.map((s) => (
                     <button
@@ -135,14 +134,15 @@ const Contact: React.FC = () => {
 
               <button
                 type="submit"
-                className="btn-press group mt-7 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-ak-green border-ak-greenDark px-7 py-4 text-[16px] font-bold text-white"
+                disabled={!WHATSAPP_NUMBER}
+                className="btn-press group mt-7 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-ak-green border-ak-greenDark px-7 py-4 text-[16px] font-bold text-white disabled:opacity-50"
               >
-                Envoyer ma demande
-                <Send size={16} className="transition-transform group-hover:translate-x-0.5" />
+                <MessageCircle size={18} strokeWidth={2.2} />
+                Envoyer sur WhatsApp
               </button>
 
               <p className="mt-4 text-center text-[12px] text-ak-text/60">
-                Le message s'ouvre dans votre application mail. Aucune donnée n'est stockée par ce site.
+                WhatsApp s'ouvre avec votre message déjà rédigé. Aucune donnée n'est stockée par ce site.
               </p>
             </form>
           </Reveal>

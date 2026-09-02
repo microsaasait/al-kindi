@@ -35,22 +35,22 @@ const Navbar: React.FC = () => {
             width={48}
             height={48}
           />
-          <span className="text-[18px] font-extrabold tracking-tight text-ak-ink">Al Kindi</span>
+          <span className="whitespace-nowrap text-[18px] font-extrabold tracking-tight text-ak-ink">Al Kindi</span>
         </a>
 
-        <nav className="hidden md:flex items-center gap-7">
+        <nav className="hidden lg:flex items-center gap-6">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-[15px] font-medium text-ak-text hover:text-ak-green transition-colors"
+              className="whitespace-nowrap text-[15px] font-medium text-ak-text hover:text-ak-green transition-colors"
             >
               {link.label}
             </a>
           ))}
           <a
             href="#contact"
-            className="btn-press bg-ak-green border-ak-greenDark text-white text-[15px] font-bold px-6 py-3 rounded-2xl"
+            className="btn-press whitespace-nowrap bg-ak-green border-ak-greenDark text-white text-[15px] font-bold px-5 py-3 rounded-2xl"
           >
             Nous contacter
           </a>
@@ -59,7 +59,7 @@ const Navbar: React.FC = () => {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="md:hidden p-2 -mr-2 text-ak-ink"
+          className="lg:hidden p-2 -mr-2 text-ak-ink"
           aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
           aria-expanded={open}
         >
@@ -68,7 +68,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {open && (
-        <div className="md:hidden bg-ak-cream border-t-2 border-ak-ink/10">
+        <div className="lg:hidden bg-ak-cream border-t-2 border-ak-ink/10">
           <nav className="px-5 py-4 flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
               <a

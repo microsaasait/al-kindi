@@ -1,26 +1,22 @@
 // ---------------------------------------------------------------------------
 // AL KINDI : configuration du site (un seul endroit à modifier).
-// ⚠️ Les valeurs marquées TODO viennent de l'association — à confirmer avec
-// Eddy avant la mise en ligne définitive (elles apparaissent telles quelles
-// sur la page et dans le schema.org).
+// Règle : rien n'est inventé ici. Un champ vide n'est pas affiché sur la page
+// plutôt que de montrer une fausse coordonnée.
 // ---------------------------------------------------------------------------
 
-export const SITE_URL = 'https://al-kindi-seven.vercel.app'; // TODO remplacer par le domaine définitif de l'association (et le répercuter dans index.html, robots.txt et sitemap.xml)
+// URL de production. À remplacer le jour où l'association pose son domaine
+// (le répercuter aussi dans index.html, public/robots.txt et public/sitemap.xml).
+export const SITE_URL = 'https://al-kindi-seven.vercel.app';
 
+// Numéro WhatsApp qui reçoit les demandes, au format international sans « + ».
+// C'est le seul canal de contact du site : pas d'email tant que l'association
+// n'en a pas communiqué un.
+export const WHATSAPP_NUMBER: string = '';
+
+// Coordonnées. Seule la ville est connue (elle figure sur le logo).
 export const CONTACT = {
-  email: 'contact@association-alkindi.fr', // TODO email réel
-  phone: '', // TODO téléphone réel — laissé vide : le bloc ne s'affiche pas tant qu'il n'est pas rempli
-  phoneHref: '',
   city: 'Roquebrune-sur-Argens',
-  postalCode: '83520',
-  region: 'Var',
-  addressLine: '', // TODO adresse du local si l'association en a un
-};
-
-export const HOURS = {
-  // TODO créneaux réels. Tant que la liste est vide, la section affiche
-  // un message d'attente plutôt qu'un horaire inventé.
-  slots: [] as { day: string; time: string; detail: string }[],
+  addressLine: '', // adresse du local, si l'association en a un
 };
 
 export const DEFAULT_OG_IMAGE = '/media/og-image.jpg';

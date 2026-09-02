@@ -111,11 +111,11 @@ export const FAQ = [
   },
   {
     q: 'Comment inscrire mon enfant ?',
-    a: "Écrivez-nous depuis le formulaire de cette page en précisant la classe et les matières concernées. Nous revenons vers vous pour un premier échange et une séance de découverte.",
+    a: "Écrivez-nous sur WhatsApp depuis le formulaire de cette page en précisant la classe et les matières concernées. Nous revenons vers vous pour un premier échange et une séance de découverte.",
   },
   {
     q: 'Peut-on devenir bénévole ?',
-    a: "Oui, et c'est ce dont l'association a le plus besoin. Étudiants, enseignants, retraités, professionnels : quelques heures par semaine suffisent pour changer l'année d'un élève. Écrivez-nous en précisant vos matières et vos disponibilités.",
+    a: "Oui, et c'est ce dont l'association a le plus besoin. Étudiants, enseignants, retraités, professionnels : quelques heures par semaine suffisent pour changer l'année d'un élève. Écrivez-nous sur WhatsApp en précisant vos matières et vos disponibilités.",
   },
 ];
 
@@ -123,5 +123,6 @@ export const NAV_LINKS = [
   { href: '#actions', label: 'Nos actions' },
   { href: '#heritage', label: 'Notre nom' },
   { href: '#methode', label: 'Comment ça marche' },
+  { href: '#quiz', label: 'Mini-jeu' },
   { href: '#faq', label: 'Questions' },
 ];

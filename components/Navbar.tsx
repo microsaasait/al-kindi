@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
       <div className="max-w-6xl mx-auto px-5 sm:px-8 h-[72px] flex items-center justify-between">
         <a href="#top" className="flex items-center gap-3" aria-label="Association Al Kindi, accueil">
           <img
-            src="/media/logo-al-kindi.jpg"
+            src="/media/logo-mini.webp"
             alt=""
             className="h-12 w-12 rounded-2xl object-cover border-2 border-ak-ink/10"
             width={48}

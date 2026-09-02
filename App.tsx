@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -11,7 +11,11 @@ import Volunteers from './components/Volunteers';
 import Faq from './components/Faq';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import Admin from './pages/Admin';
+
+// Le tableau de bord et la page légale ne concernent pas le visiteur qui arrive
+// sur l'accueil : ils sont chargés seulement quand on va sur leur adresse.
+const Admin = lazy(() => import('./pages/Admin'));
+const Confidentialite = lazy(() => import('./pages/Confidentialite'));
 
 const Home: React.FC = () => (
   <>
@@ -31,13 +35,22 @@ const Home: React.FC = () => (
   </>
 );
 
+const Attente: React.FC = () => (
+  <div className="flex min-h-screen items-center justify-center bg-ak-cream">
+    <span className="h-8 w-8 animate-spin rounded-full border-4 border-ak-green/25 border-t-ak-green" />
+  </div>
+);
+
 const App: React.FC = () => (
   <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/admin" element={<Admin />} />
-      <Route path="*" element={<Home />} />
-    </Routes>
+    <Suspense fallback={<Attente />}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/confidentialite" element={<Confidentialite />} />
+        <Route path="*" element={<Home />} />
+      </Routes>
+    </Suspense>
   </BrowserRouter>
 );
 

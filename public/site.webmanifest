@@ -1,0 +1,16 @@
+{
+  "name": "Association Al Kindi",
+  "short_name": "Al Kindi",
+  "description": "Soutien scolaire et aide aux devoirs à Roquebrune-sur-Argens.",
+  "lang": "fr-FR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FFF8EC",
+  "theme_color": "#14432C",
+  "icons": [
+    { "src": "/media/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/media/favicon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/media/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

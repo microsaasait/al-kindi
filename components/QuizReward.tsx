@@ -4,7 +4,7 @@ import confetti from 'canvas-confetti';
 import { Check, Gift, Loader2, Ticket } from 'lucide-react';
 import Wheel, { type WheelSegment } from './Wheel';
 import { PERSO } from '../src/personnages';
-import { currentPeriod, periodLabel, supabase, supabaseReady } from '../src/supabase';
+import { DOUBLON, apiPrete, inserer, moisCourant, moisEnClair } from '../src/api';
 
 /** Huit tickets : au-dessus de 8 bonnes réponses, la participation est acquise. */
 const SEGMENTS: WheelSegment[] = [
@@ -36,10 +36,10 @@ const QuizReward: React.FC<Props> = ({ score }) => {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
 
-  const period = currentPeriod();
+  const period = moisCourant();
 
   // Sans configuration Supabase, on n'affiche pas une promesse qu'on ne peut pas tenir.
-  if (!supabaseReady) return null;
+  if (!apiPrete) return null;
 
   const spin = () => {
     setStep('spinning');
@@ -69,7 +69,7 @@ const QuizReward: React.FC<Props> = ({ score }) => {
     }
 
     setBusy(true);
-    const { error: dbError } = await supabase.from('ak_participants').insert({
+    const echec = await inserer('ak_participants', {
       period,
       first_name: firstName.trim(),
       contact: contact.trim(),
@@ -80,10 +80,9 @@ const QuizReward: React.FC<Props> = ({ score }) => {
     });
     setBusy(false);
 
-    if (dbError) {
-      // 23505 = doublon : une seule participation par contact et par mois.
+    if (echec) {
       setError(
-        dbError.code === '23505'
+        echec.code === DOUBLON
           ? 'Tu as déjà un ticket pour ce mois-ci. Reviens le mois prochain !'
           : 'L’enregistrement n’a pas fonctionné. Réessaie dans un instant.'
       );
@@ -107,7 +106,7 @@ const QuizReward: React.FC<Props> = ({ score }) => {
             <motion.img
               src={PERSO.fete}
               alt=""
-              className="mx-auto h-20 w-20"
+              width={192} height={192} loading="lazy" className="mx-auto h-20 w-20"
               animate={{ rotate: [0, -8, 8, 0] }}
               transition={{ repeat: Infinity, duration: 2.4, ease: 'easeInOut' }}
             />
@@ -140,11 +139,11 @@ const QuizReward: React.FC<Props> = ({ score }) => {
         {step === 'form' && (
           <motion.div key="form" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
             <div className="flex items-center gap-3">
-              <img src={PERSO.trophee} alt="" className="h-14 w-14" />
+              <img src={PERSO.trophee} alt="" width={192} height={192} loading="lazy" className="h-14 w-14" />
               <div>
                 <p className="text-[19px] font-extrabold text-ak-ink">Ticket décroché !</p>
                 <p className="text-[14px] text-ak-text">
-                  Laisse-nous de quoi te prévenir si tu gagnes en {periodLabel(period)}.
+                  Laisse-nous de quoi te prévenir si tu gagnes en {moisEnClair(period)}.
                 </p>
               </div>
             </div>
@@ -251,10 +250,10 @@ const QuizReward: React.FC<Props> = ({ score }) => {
             </span>
             <p className="mt-5 text-[20px] font-extrabold text-ak-ink">Ticket enregistré, {firstName} !</p>
             <p className="mx-auto mt-2 max-w-md text-[15px] leading-[1.65] text-ak-text">
-              Le tirage de {periodLabel(period)} a lieu à la fin du mois. Si ton ticket sort, l’association
+              Le tirage de {moisEnClair(period)} a lieu à la fin du mois. Si ton ticket sort, l’association
               te prévient et t’offre 20 € de crédit sur la plateforme de ton choix.
             </p>
-            <img src={PERSO.acrobate} alt="" className="mx-auto mt-5 h-16 w-16" />
+            <img src={PERSO.acrobate} alt="" width={192} height={192} loading="lazy" className="mx-auto mt-5 h-16 w-16" />
           </motion.div>
         )}
       </AnimatePresence>

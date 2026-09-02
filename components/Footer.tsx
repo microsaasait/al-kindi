@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { NAV_LINKS } from '../src/content';
 import { CONTACT } from '../src/siteConfig';
 
@@ -8,7 +9,7 @@ const Footer: React.FC = () => (
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
         <div className="flex items-center gap-3">
           <img
-            src="/media/logo-al-kindi.jpg"
+            src="/media/logo-mini.webp"
             alt=""
             className="h-14 w-14 rounded-2xl object-cover"
             width={56}
@@ -30,6 +31,9 @@ const Footer: React.FC = () => (
           <a href="#contact" className="text-[14px] font-medium hover:text-white transition-colors">
             Contact
           </a>
+          <Link to="/confidentialite" className="text-[14px] font-medium hover:text-white transition-colors">
+            Données et mentions légales
+          </Link>
         </nav>
       </div>
 
@@ -37,7 +41,11 @@ const Footer: React.FC = () => (
         Jeu du mois : participation gratuite et sans obligation, ouverte à partir de 8 bonnes réponses sur
         10, un ticket par personne et par mois, accord des parents obligatoire. Le tirage a lieu en fin de
         mois et le gagnant reçoit 20 € de crédit sur la plateforme de son choix. Les coordonnées servent
-        uniquement à prévenir le gagnant et sont effacées après la remise du lot.
+        uniquement à prévenir le gagnant et sont effacées après la remise du lot.{' '}
+        <Link to="/confidentialite" className="underline hover:text-white">
+          Détail des données et de vos droits
+        </Link>
+        .
       </p>
 
       <div className="mt-8 pt-8 border-t-2 border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">

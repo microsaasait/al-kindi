@@ -261,7 +261,7 @@ const Admin: React.FC = () => {
     return (
       <div className="flex min-h-screen items-center justify-center bg-ak-cream px-5">
         <form onSubmit={signIn} className="ak-card w-full max-w-sm p-8">
-          <img src="/media/logo-al-kindi.jpg" alt="" className="mx-auto h-16 w-16 rounded-2xl object-cover" />
+          <img src="/media/logo-mini.webp" alt="" className="mx-auto h-16 w-16 rounded-2xl object-cover" />
           <h1 className="mt-5 text-center text-[22px] font-extrabold text-ak-ink">Espace association</h1>
           <p className="mt-2 text-center text-[14px] text-ak-text">
             Entrez le code de l’association pour accéder au tirage.
@@ -308,7 +308,7 @@ const Admin: React.FC = () => {
       <header className="border-b-2 border-ak-ink/10 bg-ak-paper">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
           <div className="flex items-center gap-3">
-            <img src="/media/logo-al-kindi.jpg" alt="" className="h-11 w-11 rounded-2xl object-cover" />
+            <img src="/media/logo-mini.webp" alt="" className="h-11 w-11 rounded-2xl object-cover" />
             <div>
               <p className="text-[16px] font-extrabold text-ak-ink">Tirage du mois</p>
               <p className="text-[13px] text-ak-text">Espace association Al Kindi</p>
@@ -385,7 +385,7 @@ const Admin: React.FC = () => {
             <p className="mt-1 text-[14px] text-ak-text">gagnant du mois</p>
           </div>
           <div className="ak-card p-6">
-            <img src={PERSO.trophee} alt="" className="h-11 w-11" />
+            <img src={PERSO.trophee} alt="" width={192} height={192} loading="lazy" className="h-11 w-11" />
             <p className="mt-4 text-[18px] font-extrabold leading-tight text-ak-ink">{draws.length}</p>
             <p className="mt-1 text-[14px] text-ak-text">tirages réalisés</p>
           </div>
@@ -520,7 +520,7 @@ const Admin: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="mt-8 w-full rounded-3xl border-2 border-ak-gold/50 bg-ak-gold/10 p-6 text-center"
                 >
-                  <img src={PERSO.fete} alt="" className="mx-auto h-16 w-16" />
+                  <img src={PERSO.fete} alt="" width={192} height={192} loading="lazy" className="mx-auto h-16 w-16" />
                   <p className="mt-3 text-[22px] font-extrabold text-ak-ink">{revealed.winner_name}</p>
                   <p className="mt-1 text-[15px] font-semibold text-ak-text">{revealed.winner_contact}</p>
                   <p className="mt-3 text-[14px] text-ak-text">

@@ -123,11 +123,11 @@ const Hero: React.FC = () => (
           transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
         >
           <motion.img
-            src="/media/logo-al-kindi.jpg"
+            src="/media/logo.webp"
             alt="Logo de l'association Al Kindi : entraide, soutien et réussite, Roquebrune-sur-Argens"
             className="w-full h-auto mix-blend-multiply"
-            width={1254}
-            height={1254}
+            width={800}
+            height={800}
             fetchPriority="high"
             animate={{ y: [0, -12, 0] }}
             transition={{ repeat: Infinity, duration: 6, ease: 'easeInOut' }}

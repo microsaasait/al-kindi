@@ -85,7 +85,7 @@ const Quiz: React.FC = () => {
       <motion.img
         src={PERSO.garcon}
         alt=""
-        aria-hidden="true"
+        width={192} height={192} loading="lazy" aria-hidden="true"
         className="pointer-events-none absolute left-[4%] top-24 hidden h-16 w-16 lg:block"
         animate={{ y: [0, -14, 0] }}
         transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
@@ -93,7 +93,7 @@ const Quiz: React.FC = () => {
       <motion.img
         src={PERSO.fille}
         alt=""
-        aria-hidden="true"
+        width={192} height={192} loading="lazy" aria-hidden="true"
         className="pointer-events-none absolute right-[5%] top-40 hidden h-16 w-16 lg:block"
         animate={{ y: [0, -11, 0] }}
         transition={{ repeat: Infinity, duration: 6, ease: 'easeInOut', delay: 0.6 }}
@@ -101,7 +101,7 @@ const Quiz: React.FC = () => {
       <motion.img
         src={PERSO.studieux}
         alt=""
-        aria-hidden="true"
+        width={192} height={192} loading="lazy" aria-hidden="true"
         className="pointer-events-none absolute left-[7%] bottom-24 hidden h-14 w-14 lg:block"
         animate={{ y: [0, -10, 0], rotate: [0, 6, 0] }}
         transition={{ repeat: Infinity, duration: 5.5, ease: 'easeInOut', delay: 1.1 }}
@@ -109,7 +109,7 @@ const Quiz: React.FC = () => {
       <motion.img
         src={PERSO.mainLevee}
         alt=""
-        aria-hidden="true"
+        width={192} height={192} loading="lazy" aria-hidden="true"
         className="pointer-events-none absolute right-[7%] bottom-32 hidden h-16 w-16 lg:block"
         animate={{ y: [0, -13, 0] }}
         transition={{ repeat: Infinity, duration: 4.6, ease: 'easeInOut', delay: 0.3 }}
@@ -161,21 +161,21 @@ const Quiz: React.FC = () => {
                       <motion.img
                         src={PERSO.eleve}
                         alt=""
-                        className="h-16 w-16"
+                        width={192} height={192} loading="lazy" className="h-16 w-16"
                         animate={{ y: [0, -7, 0] }}
                         transition={{ repeat: Infinity, duration: 3.2, ease: 'easeInOut' }}
                       />
                       <motion.img
                         src={PERSO.prof}
                         alt=""
-                        className="h-24 w-24"
+                        width={192} height={192} loading="lazy" className="h-24 w-24"
                         animate={{ y: [0, -10, 0] }}
                         transition={{ repeat: Infinity, duration: 3.6, ease: 'easeInOut', delay: 0.4 }}
                       />
                       <motion.img
                         src={PERSO.diplome}
                         alt=""
-                        className="h-14 w-14"
+                        width={192} height={192} loading="lazy" className="h-14 w-14"
                         animate={{ y: [0, -8, 0], rotate: [0, 8, 0] }}
                         transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut', delay: 0.8 }}
                       />

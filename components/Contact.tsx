@@ -4,7 +4,7 @@ import { Check, Loader2, MapPin, MessageSquare, Send, ShieldCheck } from 'lucide
 import Reveal from './Reveal';
 import { PERSO } from '../src/personnages';
 import { CONTACT } from '../src/siteConfig';
-import { supabase, supabaseReady } from '../src/supabase';
+import { apiPrete, inserer } from '../src/api';
 
 type Kind = 'inscription' | 'benevolat' | 'autre';
 
@@ -35,13 +35,13 @@ const Contact: React.FC = () => {
     setError('');
 
     if (website) return; // un robot a rempli le champ caché
-    if (!supabaseReady) {
+    if (!apiPrete) {
       setError('Le formulaire n’est pas encore configuré.');
       return;
     }
 
     setBusy(true);
-    const { error: dbError } = await supabase.from('ak_messages').insert({
+    const echec = await inserer('ak_messages', {
       kind,
       name: name.trim(),
       contact: contact.trim(),
@@ -51,7 +51,7 @@ const Contact: React.FC = () => {
     });
     setBusy(false);
 
-    if (dbError) {
+    if (echec) {
       setError('L’envoi n’a pas fonctionné. Réessayez dans un instant.');
       return;
     }
@@ -92,7 +92,7 @@ const Contact: React.FC = () => {
               </li>
             </ul>
 
-            <img src={PERSO.profe} alt="" className="mt-10 hidden h-24 w-24 lg:block" />
+            <img src={PERSO.profe} alt="" width={192} height={192} loading="lazy" className="mt-10 hidden h-24 w-24 lg:block" />
           </Reveal>
 
           <Reveal delay={0.1}>
@@ -111,7 +111,7 @@ const Contact: React.FC = () => {
                   L’association a bien reçu votre message{name ? `, ${name.trim()}` : ''}. Elle vous
                   répond en général sous 48 heures.
                 </p>
-                <img src={PERSO.mainLevee} alt="" className="mt-6 h-16 w-16" />
+                <img src={PERSO.mainLevee} alt="" width={192} height={192} loading="lazy" className="mt-6 h-16 w-16" />
               </motion.div>
             ) : (
               <form onSubmit={submit} className="ak-card p-6 sm:p-8">

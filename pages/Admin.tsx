@@ -20,12 +20,18 @@ import { currentPeriod, periodLabel, supabase, supabaseReady, type Draw, type Pa
 
 const COLORS = ['#1E7A4B', '#F0B429', '#EE7B1C', '#14603A', '#6BBF59', '#B8860B'];
 
+// Identifiant technique du compte de l'association. Ce n'est pas un secret :
+// c'est un simple nom de compte, l'équivalent d'un login. Le code d'accès, lui,
+// n'apparaît nulle part dans ce fichier : il est saisi par la personne et
+// vérifié par le serveur d'authentification, jamais par le navigateur. Un code
+// comparé ici serait lisible dans le JavaScript public par n'importe qui.
+const ADMIN_ACCOUNT = 'admin@al-kindi.fr';
+
 const Admin: React.FC = () => {
   const [ready, setReady] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [code, setCode] = useState('');
   const [authError, setAuthError] = useState('');
   const [authBusy, setAuthBusy] = useState(false);
 
@@ -94,9 +100,12 @@ const Admin: React.FC = () => {
     e.preventDefault();
     setAuthBusy(true);
     setAuthError('');
-    const { error: err } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+    const { error: err } = await supabase.auth.signInWithPassword({
+      email: ADMIN_ACCOUNT,
+      password: code.trim(),
+    });
     setAuthBusy(false);
-    if (err) setAuthError('Identifiants refusés.');
+    if (err) setAuthError('Code refusé.');
   };
 
   const runDraw = async () => {
@@ -172,28 +181,21 @@ const Admin: React.FC = () => {
           <img src="/media/logo-al-kindi.jpg" alt="" className="mx-auto h-16 w-16 rounded-2xl object-cover" />
           <h1 className="mt-5 text-center text-[22px] font-extrabold text-ak-ink">Espace association</h1>
           <p className="mt-2 text-center text-[14px] text-ak-text">
-            Réservé aux responsables Al Kindi.
+            Entrez le code de l’association pour accéder au tirage.
           </p>
 
           <label className="mt-7 block">
-            <span className="text-[13px] font-bold uppercase tracking-wide text-ak-text">Email</span>
+            <span className="text-[13px] font-bold uppercase tracking-wide text-ak-text">
+              Code d’accès
+            </span>
             <input
-              className="ak-input mt-2"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              autoComplete="username"
-              required
-            />
-          </label>
-          <label className="mt-4 block">
-            <span className="text-[13px] font-bold uppercase tracking-wide text-ak-text">Mot de passe</span>
-            <input
-              className="ak-input mt-2"
+              className="ak-input mt-2 text-center tracking-[0.12em]"
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              placeholder="••••••••••••"
               autoComplete="current-password"
+              autoFocus
               required
             />
           </label>
@@ -210,7 +212,7 @@ const Admin: React.FC = () => {
             className="btn-press mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-ak-green border-ak-greenDark px-7 py-4 text-[16px] font-bold text-white disabled:opacity-60"
           >
             {authBusy ? <Loader2 size={18} className="animate-spin" /> : <Lock size={17} strokeWidth={2.4} />}
-            Se connecter
+            Entrer
           </button>
         </form>
       </div>

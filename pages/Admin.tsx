@@ -4,6 +4,8 @@ import confetti from 'canvas-confetti';
 import {
   Calendar,
   Check,
+  Download,
+  Inbox,
   Loader2,
   LogOut,
   Lock,
@@ -16,7 +18,29 @@ import {
 } from 'lucide-react';
 import Wheel, { type WheelSegment } from '../components/Wheel';
 import { PERSO } from '../src/personnages';
-import { currentPeriod, periodLabel, supabase, supabaseReady, type Draw, type Participant } from '../src/supabase';
+import {
+  currentPeriod,
+  downloadCsv,
+  formatDate,
+  periodLabel,
+  supabase,
+  supabaseReady,
+  type Draw,
+  type Message,
+  type Participant,
+} from '../src/supabase';
+
+const KIND_LABEL: Record<Message['kind'], string> = {
+  inscription: 'Inscription',
+  benevolat: 'Bénévolat',
+  autre: 'Autre',
+};
+
+const KIND_TONE: Record<Message['kind'], string> = {
+  inscription: 'bg-ak-green/10 text-ak-green',
+  benevolat: 'bg-ak-orange/10 text-ak-orange',
+  autre: 'bg-ak-ink/8 text-ak-text',
+};
 
 const COLORS = ['#1E7A4B', '#F0B429', '#EE7B1C', '#14603A', '#6BBF59', '#B8860B'];
 
@@ -38,6 +62,9 @@ const Admin: React.FC = () => {
   const [period, setPeriod] = useState(currentPeriod());
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [draws, setDraws] = useState<Draw[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [messageFilter, setMessageFilter] = useState<'tous' | Message['kind']>('tous');
+  const [showHandled, setShowHandled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -65,13 +92,16 @@ const Admin: React.FC = () => {
   const load = useCallback(async () => {
     setLoading(true);
     setError('');
-    const [p, d] = await Promise.all([
+    const [p, d, m] = await Promise.all([
       supabase.from('ak_participants').select('*').eq('period', period).order('created_at', { ascending: false }),
       supabase.from('ak_draws').select('*').order('drawn_at', { ascending: false }),
+      supabase.from('ak_messages').select('*').order('created_at', { ascending: false }),
     ]);
-    if (p.error || d.error) setError(p.error?.message ?? d.error?.message ?? 'Erreur de chargement');
+    const firstError = p.error ?? d.error ?? m.error;
+    if (firstError) setError(firstError.message);
     setParticipants((p.data as Participant[]) ?? []);
     setDraws((d.data as Draw[]) ?? []);
+    setMessages((m.data as Message[]) ?? []);
     setLoading(false);
   }, [period]);
 
@@ -147,6 +177,59 @@ const Admin: React.FC = () => {
   const toggleClaimed = async (draw: Draw) => {
     await supabase.from('ak_draws').update({ claimed: !draw.claimed }).eq('id', draw.id);
     void load();
+  };
+
+  const visibleMessages = useMemo(
+    () =>
+      messages.filter(
+        (m) => (messageFilter === 'tous' || m.kind === messageFilter) && (showHandled || !m.handled)
+      ),
+    [messages, messageFilter, showHandled]
+  );
+
+  const pendingCount = useMemo(() => messages.filter((m) => !m.handled).length, [messages]);
+
+  const toggleHandled = async (m: Message) => {
+    await supabase.from('ak_messages').update({ handled: !m.handled }).eq('id', m.id);
+    void load();
+  };
+
+  const removeMessage = async (id: string) => {
+    await supabase.from('ak_messages').delete().eq('id', id);
+    void load();
+  };
+
+  const exportMessages = () => {
+    downloadCsv(
+      `al-kindi-demandes-${new Date().toISOString().slice(0, 10)}.csv`,
+      ['Date', 'Type', 'Nom', 'Contact', 'Moyen', 'Classe ou matières', 'Message', 'Traité'],
+      visibleMessages.map((m) => [
+        formatDate(m.created_at),
+        KIND_LABEL[m.kind],
+        m.name,
+        m.contact,
+        m.contact_kind === 'email' ? 'Email' : 'Téléphone',
+        m.detail ?? '',
+        m.message,
+        m.handled ? 'Oui' : 'Non',
+      ])
+    );
+  };
+
+  const exportParticipants = () => {
+    downloadCsv(
+      `al-kindi-participants-${period}.csv`,
+      ['Date', 'Prénom', 'Contact', 'Moyen', 'Classe', 'Score', 'Accord parental'],
+      participants.map((p) => [
+        formatDate(p.created_at),
+        p.first_name,
+        p.contact,
+        p.contact_kind === 'email' ? 'Email' : 'Téléphone',
+        p.school_level ?? '',
+        `${p.score}/10`,
+        p.parental_ok ? 'Oui' : 'Non',
+      ])
+    );
   };
 
   const removeParticipant = async (id: string) => {
@@ -277,7 +360,14 @@ const Admin: React.FC = () => {
         )}
 
         {/* Chiffres */}
-        <div className="mt-6 grid gap-4 sm:grid-cols-3">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="ak-card p-6">
+            <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-ak-orange/10 text-ak-orange">
+              <Inbox size={20} strokeWidth={2.2} />
+            </span>
+            <p className="mt-4 text-[32px] font-extrabold leading-none text-ak-ink">{pendingCount}</p>
+            <p className="mt-1 text-[14px] text-ak-text">demandes à traiter</p>
+          </div>
           <div className="ak-card p-6">
             <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-ak-green/10 text-ak-green">
               <Users size={20} strokeWidth={2.2} />
@@ -300,6 +390,115 @@ const Admin: React.FC = () => {
             <p className="mt-1 text-[14px] text-ak-text">tirages réalisés</p>
           </div>
         </div>
+
+        {/* Demandes reçues depuis le formulaire du site */}
+        <section className="ak-card mt-6 overflow-hidden">
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 border-ak-ink/10 px-6 py-5">
+            <div>
+              <h2 className="text-[20px] font-extrabold text-ak-ink">Demandes reçues</h2>
+              <p className="mt-1 text-[14px] text-ak-text">
+                Tout ce qui est envoyé depuis le formulaire du site arrive ici.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={exportMessages}
+              disabled={visibleMessages.length === 0}
+              className="btn-press inline-flex items-center gap-2 rounded-2xl bg-ak-ink border-black/25 px-5 py-3 text-[14px] font-bold text-white disabled:opacity-40"
+            >
+              <Download size={16} strokeWidth={2.4} />
+              Exporter en CSV
+            </button>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2 border-b-2 border-ak-ink/10 px-6 py-4">
+            {(['tous', 'inscription', 'benevolat', 'autre'] as const).map((f) => (
+              <button
+                key={f}
+                type="button"
+                onClick={() => setMessageFilter(f)}
+                className={`rounded-full border-2 px-4 py-2 text-[13px] font-bold transition-colors ${
+                  messageFilter === f
+                    ? 'bg-ak-green border-ak-green text-white'
+                    : 'bg-white border-ak-ink/12 text-ak-text hover:border-ak-green/50'
+                }`}
+              >
+                {f === 'tous' ? 'Toutes' : KIND_LABEL[f]}
+              </button>
+            ))}
+            <label className="ml-auto flex items-center gap-2 text-[13px] font-bold text-ak-text">
+              <input
+                type="checkbox"
+                checked={showHandled}
+                onChange={(e) => setShowHandled(e.target.checked)}
+                className="h-4 w-4 accent-[#1E7A4B]"
+              />
+              Afficher les demandes traitées
+            </label>
+          </div>
+
+          {visibleMessages.length === 0 ? (
+            <p className="px-6 py-10 text-center text-[15px] text-ak-text">
+              Aucune demande à afficher pour l’instant.
+            </p>
+          ) : (
+            <ul className="divide-y divide-ak-ink/8">
+              {visibleMessages.map((m) => (
+                <li key={m.id} className={`px-6 py-5 ${m.handled ? 'opacity-60' : ''}`}>
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className={`rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide ${KIND_TONE[m.kind]}`}>
+                          {KIND_LABEL[m.kind]}
+                        </span>
+                        <span className="text-[16px] font-extrabold text-ak-ink">{m.name}</span>
+                        {m.detail && (
+                          <span className="rounded-full bg-ak-ink/8 px-2.5 py-0.5 text-[12px] font-bold text-ak-text">
+                            {m.detail}
+                          </span>
+                        )}
+                      </div>
+                      <a
+                        href={m.contact_kind === 'email' ? `mailto:${m.contact}` : `tel:${m.contact}`}
+                        className="mt-1.5 inline-flex items-center gap-1.5 text-[14px] font-semibold text-ak-text hover:text-ak-green"
+                      >
+                        {m.contact_kind === 'email' ? <Mail size={13} /> : <Phone size={13} />}
+                        {m.contact}
+                      </a>
+                      <p className="mt-2 whitespace-pre-wrap text-[15px] leading-[1.65] text-ak-text">
+                        {m.message}
+                      </p>
+                      <p className="mt-2 text-[12px] text-ak-text/60">{formatDate(m.created_at)}</p>
+                    </div>
+
+                    <div className="flex shrink-0 items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => toggleHandled(m)}
+                        className={`rounded-xl border-2 px-3 py-2 text-[13px] font-bold ${
+                          m.handled
+                            ? 'bg-ak-green border-ak-green text-white'
+                            : 'bg-white border-ak-ink/12 text-ak-text hover:border-ak-green/50'
+                        }`}
+                      >
+                        <Check size={15} strokeWidth={2.6} className="inline" />
+                        <span className="ml-1.5">{m.handled ? 'Traitée' : 'À traiter'}</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeMessage(m.id)}
+                        className="rounded-xl border-2 border-ak-ink/10 p-2 text-ak-text hover:border-red-300 hover:text-red-600"
+                        aria-label={`Supprimer la demande de ${m.name}`}
+                      >
+                        <Trash2 size={16} strokeWidth={2.2} />
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
 
         {/* Roue de tirage */}
         <section className="ak-card mt-6 p-6 sm:p-8">
@@ -368,13 +567,24 @@ const Admin: React.FC = () => {
 
         {/* Participants */}
         <section className="ak-card mt-6 overflow-hidden">
-          <div className="border-b-2 border-ak-ink/10 px-6 py-5">
-            <h2 className="text-[20px] font-extrabold text-ak-ink">
-              Participants de {periodLabel(period)}
-            </h2>
-            <p className="mt-1 text-[14px] text-ak-text">
-              Coordonnées d’élèves : à ne pas diffuser, et à effacer une fois le lot remis.
-            </p>
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 border-ak-ink/10 px-6 py-5">
+            <div>
+              <h2 className="text-[20px] font-extrabold text-ak-ink">
+                Participants de {periodLabel(period)}
+              </h2>
+              <p className="mt-1 text-[14px] text-ak-text">
+                Coordonnées d’élèves : à ne pas diffuser, et à effacer une fois le lot remis.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={exportParticipants}
+              disabled={participants.length === 0}
+              className="btn-press inline-flex items-center gap-2 rounded-2xl bg-ak-ink border-black/25 px-5 py-3 text-[14px] font-bold text-white disabled:opacity-40"
+            >
+              <Download size={16} strokeWidth={2.4} />
+              Exporter en CSV
+            </button>
           </div>
 
           {participants.length === 0 ? (

@@ -58,3 +58,46 @@ export interface Draw {
   claimed: boolean;
   notes: string | null;
 }
+
+export interface Message {
+  id: string;
+  created_at: string;
+  kind: 'inscription' | 'benevolat' | 'autre';
+  name: string;
+  contact: string;
+  contact_kind: 'email' | 'phone';
+  detail: string | null;
+  message: string;
+  handled: boolean;
+}
+
+/** Échappe une valeur pour un CSV : guillemets doublés, champ toujours quoté. */
+const csvCell = (value: unknown): string => `"${String(value ?? '').replace(/"/g, '""')}"`;
+
+/**
+ * Déclenche le téléchargement d'un CSV lisible par Excel et par Numbers.
+ * Le point-virgule est le séparateur attendu par Excel en configuration française,
+ * et le BOM évite que les accents s'affichent en charabia.
+ */
+export const downloadCsv = (filename: string, headers: string[], rows: unknown[][]): void => {
+  const content = [headers, ...rows].map((row) => row.map(csvCell).join(';')).join('\r\n');
+  const blob = new Blob([`﻿${content}`], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
+
+/** '2026-09-02T21:00:00Z' -> '02/09/2026 23:00' */
+export const formatDate = (iso: string): string =>
+  new Date(iso).toLocaleString('fr-FR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });

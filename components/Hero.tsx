@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, BookOpen, HeartHandshake, PenLine, Sparkles } from 'lucide-react';
 import { HERO } from '../src/content';
 
-/** Petite icône qui flotte autour du logo — le clin d'œil ludique de la page. */
+/** Petite icône qui flotte autour du logo : le clin d'œil ludique de la page. */
 const Floating: React.FC<{
   icon: React.ElementType;
   className: string;
@@ -124,7 +124,7 @@ const Hero: React.FC = () => (
         >
           <motion.img
             src="/media/logo-al-kindi.jpg"
-            alt="Logo de l'association Al Kindi : entraide, soutien et réussite — Roquebrune-sur-Argens"
+            alt="Logo de l'association Al Kindi : entraide, soutien et réussite, Roquebrune-sur-Argens"
             className="w-full h-auto mix-blend-multiply"
             width={1254}
             height={1254}

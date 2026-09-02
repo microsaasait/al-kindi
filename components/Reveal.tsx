@@ -9,7 +9,7 @@ interface RevealProps {
 
 /**
  * Scroll reveal : opacity 0 -> 1, translateY 24px -> 0, 600ms ease.
- * Pas de spring — le rythme reste calme, comme le reste de la page.
+ * Pas de spring : le rythme reste calme, comme le reste de la page.
  */
 const Reveal: React.FC<RevealProps> = ({ children, delay = 0, className }) => (
   <motion.div

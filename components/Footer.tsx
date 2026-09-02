@@ -33,7 +33,14 @@ const Footer: React.FC = () => (
         </nav>
       </div>
 
-      <div className="mt-10 pt-8 border-t-2 border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <p className="mt-10 rounded-2xl bg-white/5 px-5 py-4 text-[13px] leading-[1.6]">
+        Jeu du mois : participation gratuite et sans obligation, ouverte à partir de 8 bonnes réponses sur
+        10, un ticket par personne et par mois, accord des parents obligatoire. Le tirage a lieu en fin de
+        mois et le gagnant reçoit 20 € de crédit sur la plateforme de son choix. Les coordonnées servent
+        uniquement à prévenir le gagnant et sont effacées après la remise du lot.
+      </p>
+
+      <div className="mt-8 pt-8 border-t-2 border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <p className="text-[13px]">Association loi 1901 · Laïque, apolitique et ouverte à tous</p>
         <p className="text-[13px]">© {new Date().getFullYear()} Association Al Kindi</p>
       </div>

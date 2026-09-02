@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /admin
 
 Sitemap: https://al-kindi-seven.vercel.app/sitemap.xml

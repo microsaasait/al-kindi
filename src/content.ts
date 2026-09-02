@@ -25,7 +25,7 @@ export const PILLARS = [
     badge: 'Les fondamentaux',
     title: 'Soutien ciblé',
     text:
-      "Des séances de révision dans les matières fondamentales — mathématiques, français, sciences — au rythme réel de l'élève.",
+      "Des séances de révision dans les matières fondamentales (mathématiques, français, sciences), au rythme réel de l'élève.",
   },
   {
     key: 'methode',
@@ -48,8 +48,8 @@ export const HERITAGE = {
   title: 'Al-Kindi, le savant qui a fait circuler la connaissance',
   paragraphs: [
     "Al-Kindi vit au IXᵉ siècle. Philosophe, mathématicien et médecin, on le considère comme le père de la philosophie arabe. Il consacre sa vie à une seule chose : chercher le savoir, puis le transmettre.",
-    "On lui doit d'avoir traduit et fait connaître la philosophie grecque antique — un pont entre les civilisations, à une époque où presque personne ne le construisait.",
-    "Son héritage dit exactement ce que nous voulons transmettre aux jeunes : le goût d'apprendre, la rigueur, l'ouverture d'esprit, et la réussite par l'effort — peu importe d'où l'on vient.",
+    "On lui doit d'avoir traduit et fait connaître la philosophie grecque antique, un pont entre les civilisations, à une époque où presque personne ne le construisait.",
+    "Son héritage dit exactement ce que nous voulons transmettre aux jeunes : le goût d'apprendre, la rigueur, l'ouverture d'esprit, et la réussite par l'effort, peu importe d'où l'on vient.",
   ],
   quote: "La vérité n'a pas de patrie : elle appartient à celui qui la cherche.",
 };
@@ -107,7 +107,7 @@ export const FAQ = [
   },
   {
     q: 'Qui encadre les élèves ?',
-    a: "Des bénévoles engagés — étudiants, enseignants, professionnels — choisis pour leur maîtrise des matières et leur pédagogie. Chaque élève est suivi dans la durée, avec un point régulier avec les parents.",
+    a: "Des bénévoles engagés (étudiants, enseignants, professionnels), choisis pour leur maîtrise des matières et leur pédagogie. Chaque élève est suivi dans la durée, avec un point régulier avec les parents.",
   },
   {
     q: 'Comment inscrire mon enfant ?',

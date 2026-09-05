@@ -1,0 +1,24 @@
+-- Correctifs de sécurité appliqués en base le 05/09/2026 (audit complet des apps K-BIR).
+-- Le site n'a pas de dossier de migrations : ce fichier existe pour garder trace de ce qui a
+-- été posé sur le projet Supabase partagé nkyfsqoavxwralhqlakj.
+--
+-- 1. ak_admin_isolation — les policies « admin » étaient toutes `using (true)` pour le rôle
+--    authenticated. N'importe quel compte du projet (l'inscription K-Chat est ouverte) pouvait
+--    LIRE et SUPPRIMER les participants au tirage — des mineurs : prénom, contact, niveau
+--    scolaire, accord parental — ainsi que les messages de contact.
+--    Remplacées par une garde sur public.is_ak_admin(), qui lit le marqueur posé dans
+--    raw_app_meta_data (écrit côté serveur, hors de portée de auth.updateUser()).
+--
+-- 2. ak_draw_winner_admin_only — le tirage ne se gardait que par `auth.role() = 'authenticated'`.
+--    Un compte créé sur K-Chat pouvait figer le gagnant du mois et lire son contact en retour.
+--    Même garde que les policies.
+--
+-- 3. ak_anti_spam — les formulaires publics insèrent directement avec la clé anon. Le champ
+--    caché du formulaire n'arrête que les robots naïfs. Trigger de débit : 5 insertions par
+--    heure et par contact, 60 par 10 minutes toutes origines confondues.
+--
+-- 4. public_revoke_truncate — TRUNCATE était accordé à anon et authenticated sur les 27 tables
+--    publiques. TRUNCATE n'est pas soumis au RLS : il vide la table quelles que soient les
+--    policies. Retiré, avec REFERENCES et TRIGGER, et retiré des privilèges par défaut.
+--
+-- Le SQL exact vit dans l'historique des migrations Supabase, sous ces quatre noms.

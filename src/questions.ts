@@ -149,7 +149,7 @@ export const MISSES = [
 /** Nombre de questions posées par partie. */
 export const ROUND_SIZE = 10;
 
-/** Score à atteindre pour faire tourner la roue. */
+/** Score à partir duquel le trophée s’affiche en fin de partie. */
 export const WIN_THRESHOLD = 8;
 
 /** Tire au hasard `count` questions distinctes de la banque. */

@@ -30,8 +30,7 @@ const Confidentialite: React.FC = () => (
         Vos données et vos droits
       </h1>
       <p className="mt-4 text-[16px] leading-[1.7] text-ak-text">
-        L’association Al Kindi recueille le minimum nécessaire pour vous répondre et pour organiser le
-        tirage du mois. Rien n’est vendu, rien n’est transmis à un tiers, et aucun traceur publicitaire
+        L’association Al Kindi recueille le minimum nécessaire pour vous répondre. Rien n’est vendu, rien n’est transmis à un tiers, et aucun traceur publicitaire
         n’est déposé sur votre appareil.
       </p>
 
@@ -50,11 +49,6 @@ const Confidentialite: React.FC = () => (
           message. Ces informations servent uniquement à vous répondre.
         </p>
         <p>
-          <strong>Quand un élève décroche un ticket au mini-jeu</strong> : son prénom, un moyen de
-          contact, sa classe si elle est renseignée et son score. Ces informations servent uniquement à
-          le prévenir s’il gagne le tirage du mois.
-        </p>
-        <p>
           Nous ne demandons ni date de naissance, ni adresse postale, ni aucune donnée sensible. Le site
           n’utilise ni cookie publicitaire, ni outil de mesure d’audience.
         </p>
@@ -62,8 +56,8 @@ const Confidentialite: React.FC = () => (
 
       <Bloc titre="Les mineurs">
         <p>
-          Le mini-jeu s’adresse à des élèves. Une participation n’est possible qu’après avoir coché la
-          case indiquant que les parents sont d’accord. Un parent peut à tout moment demander la
+          Le mini-jeu s’adresse à des élèves. Il ne demande aucune information : on joue sans rien saisir
+          et rien n’est enregistré. Un parent peut à tout moment demander la
           suppression des informations de son enfant : elle est effectuée sans délai et sans justification
           à fournir.
         </p>
@@ -71,8 +65,7 @@ const Confidentialite: React.FC = () => (
 
       <Bloc titre="Combien de temps nous les gardons">
         <p>
-          Les coordonnées liées au tirage sont effacées une fois le lot remis, et au plus tard trois mois
-          après le tirage concerné. Les demandes envoyées par le formulaire sont conservées le temps du
+          Les demandes envoyées par le formulaire sont conservées le temps du
           suivi de la demande, puis supprimées.
         </p>
       </Bloc>
@@ -94,17 +87,14 @@ const Confidentialite: React.FC = () => (
         </p>
       </Bloc>
 
-      <Bloc titre="Le jeu du mois">
+      <Bloc titre="Le mini-jeu">
         <p>
-          La participation est gratuite et sans obligation. Elle est ouverte à partir de 8 bonnes réponses
-          sur 10, à raison d’un ticket par personne et par mois. Le tirage a lieu en fin de mois parmi les
-          tickets enregistrés ; le gagnant reçoit 20 € de crédit sur la plateforme de son choix et est
-          prévenu par le moyen de contact qu’il a indiqué. Le tirage est effectué de façon aléatoire par
-          le serveur de l’association.
+          Le mini-jeu est gratuit et sert uniquement à s’entraîner. Il n’y a rien à gagner et aucune
+          information n’est demandée ni enregistrée.
         </p>
       </Bloc>
 
-      <p className="mt-12 text-[13px] text-ak-text/60">Dernière mise à jour : septembre 2026.</p>
+      <p className="mt-12 text-[13px] text-ak-text/60">Dernière mise à jour : octobre 2026.</p>
     </div>
   </div>
 );

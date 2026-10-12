@@ -1,0 +1,21 @@
+# Configuration gitleaks du site.
+#
+# On étend la configuration par défaut : toutes les règles restent actives.
+# Seule exception, la clé Firebase Web du projet k-bir-tools utilisée par le
+# tracker analytics (src/kbir-analytics.ts). Cette clé est PUBLIABLE PAR DESIGN :
+# c'est un identifiant de projet Firebase côté navigateur, pas un secret. Ce
+# qui protège les données, ce sont les règles Firestore (création seule sur
+# `analytics` / `analyticsEvents`, aucune lecture ni modification sensible).
+#
+# ⚠️  N'ajoutez JAMAIS d'autre clé à cette liste. Une clé serveur (Gemini,
+# OpenAI, service account) dans un bundle front, c'est le scénario qui a coûté
+# le projet GCP k-bir-488720 en mai 2026.
+
+[extend]
+useDefault = true
+
+# Allowlist globale : une seule valeur, la clé Firebase Web publiable.
+[allowlist]
+description = "Clé Firebase Web k-bir-tools — publiable par design (tracker analytics)"
+regexTarget = "match"
+regexes = ['''AIzaSyAGnYBsx5w4kz-Z3RUgG3CK7Df04GE9E8U''']

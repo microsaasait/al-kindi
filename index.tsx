@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './src/index.css';
 import App from './App';
+import { initAnalytics } from './src/kbir-analytics';
+
+initAnalytics();
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

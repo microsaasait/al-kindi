@@ -50,6 +50,8 @@ const Navbar: React.FC = () => {
           ))}
           <a
             href="#contact"
+            data-track="contact"
+            data-track-label="Nav · Nous contacter"
             className="btn-press whitespace-nowrap bg-ak-green border-ak-greenDark text-white text-[15px] font-bold px-5 py-3 rounded-2xl"
           >
             Nous contacter
@@ -82,6 +84,8 @@ const Navbar: React.FC = () => {
             ))}
             <a
               href="#contact"
+              data-track="contact"
+              data-track-label="Menu mobile · Nous contacter"
               onClick={() => setOpen(false)}
               className="btn-press mt-2 text-center bg-ak-green border-ak-greenDark text-white text-[16px] font-bold px-6 py-3.5 rounded-2xl"
             >

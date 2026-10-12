@@ -193,6 +193,8 @@ const Quiz: React.FC = () => {
                     <button
                       type="button"
                       onClick={start}
+                      data-track="signup"
+                      data-track-label="Quiz · Commencer le quiz"
                       className="btn-press mt-7 inline-flex items-center justify-center gap-2 rounded-2xl bg-ak-green border-ak-greenDark px-8 py-4 text-[16px] font-bold text-white"
                     >
                       Commencer le quiz
@@ -339,6 +341,8 @@ const Quiz: React.FC = () => {
                       <button
                         type="button"
                         onClick={start}
+                        data-track="signup"
+                        data-track-label="Quiz · Rejouer"
                         className="btn-press inline-flex items-center justify-center gap-2 rounded-2xl bg-white border-ak-ink/15 px-7 py-4 text-[16px] font-bold text-ak-ink"
                       >
                         <RotateCcw size={17} strokeWidth={2.4} />
@@ -346,6 +350,8 @@ const Quiz: React.FC = () => {
                       </button>
                       <a
                         href="#contact"
+                        data-track="contact"
+                        data-track-label="Quiz · Se faire accompagner"
                         className="btn-press inline-flex items-center justify-center gap-2 rounded-2xl bg-ak-green border-ak-greenDark px-7 py-4 text-[16px] font-bold text-white"
                       >
                         Se faire accompagner

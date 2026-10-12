@@ -11,6 +11,7 @@ import Volunteers from './components/Volunteers';
 import Faq from './components/Faq';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import AnalyticsTracker from './components/AnalyticsTracker';
 
 // Le tableau de bord et la page légale ne concernent pas le visiteur qui arrive
 // sur l'accueil : ils sont chargés seulement quand on va sur leur adresse.
@@ -44,10 +45,11 @@ const Attente: React.FC = () => (
 
 const App: React.FC = () => (
   <BrowserRouter>
+    <AnalyticsTracker />
     <Suspense fallback={<Attente />}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={<div data-track-ignore><Admin /></div>} />
         <Route path="/confidentialite" element={<Confidentialite />} />
         <Route path="*" element={<Introuvable />} />
       </Routes>

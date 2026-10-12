@@ -85,6 +85,8 @@ const Hero: React.FC = () => (
           >
             <a
               href="#contact"
+              data-track="signup"
+              data-track-label="Hero · Inscrire un élève"
               className="btn-press group inline-flex items-center justify-center gap-2 bg-ak-green border-ak-greenDark text-white text-[16px] font-bold px-8 py-4 rounded-2xl"
             >
               Inscrire un élève
@@ -92,6 +94,8 @@ const Hero: React.FC = () => (
             </a>
             <a
               href="#benevoles"
+              data-track="signup"
+              data-track-label="Hero · Devenir bénévole"
               className="btn-press inline-flex items-center justify-center gap-2 bg-white border-ak-ink/15 text-ak-ink text-[16px] font-bold px-8 py-4 rounded-2xl"
             >
               <HeartHandshake size={18} className="text-ak-orange" />

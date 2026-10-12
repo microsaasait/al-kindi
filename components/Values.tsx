@@ -7,7 +7,7 @@ const ICONS = [HeartHandshake, ShieldCheck, Sprout];
 const TINTS = ['bg-ak-orange/10 text-ak-orange', 'bg-ak-green/10 text-ak-green', 'bg-ak-gold/20 text-[#B8860B]'];
 
 const Values: React.FC = () => (
-  <section className="bg-ak-sand py-20 sm:py-24">
+  <section data-section="valeurs" className="bg-ak-sand py-20 sm:py-24">
     <div className="max-w-6xl mx-auto px-5 sm:px-8">
       <Reveal>
         <p className="eyebrow">Notre charte</p>

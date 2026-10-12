@@ -229,6 +229,9 @@ const Contact: React.FC = () => {
 
                 <button
                   type="submit"
+                  data-track="contact"
+                  data-track-label="Contact · Envoyer ma demande"
+                  data-track-goal="conversion"
                   disabled={busy}
                   className="btn-press group mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-ak-green border-ak-greenDark px-7 py-4 text-[16px] font-bold text-white disabled:opacity-60"
                 >

@@ -44,6 +44,8 @@ const Volunteers: React.FC = () => (
             <div className="lg:justify-self-end">
               <a
                 href="#contact"
+                data-track="signup"
+                data-track-label="Bénévoles · Proposer mon aide"
                 className="btn-press group inline-flex items-center justify-center gap-2 bg-ak-gold border-[#C8901F] text-ak-ink text-[16px] font-extrabold px-8 py-4 rounded-2xl"
               >
                 Proposer mon aide

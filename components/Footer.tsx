@@ -4,7 +4,7 @@ import { NAV_LINKS } from '../src/content';
 import { CONTACT } from '../src/siteConfig';
 
 const Footer: React.FC = () => (
-  <footer className="bg-ak-ink text-white/65">
+  <footer data-section="footer" className="bg-ak-ink text-white/65">
     <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
         <div className="flex items-center gap-3">
@@ -28,7 +28,7 @@ const Footer: React.FC = () => (
               {link.label}
             </a>
           ))}
-          <a href="#contact" className="text-[14px] font-medium hover:text-white transition-colors">
+          <a href="#contact" data-track="contact" data-track-label="Footer · Contact" className="text-[14px] font-medium hover:text-white transition-colors">
             Contact
           </a>
           <Link to="/confidentialite" className="text-[14px] font-medium hover:text-white transition-colors">
